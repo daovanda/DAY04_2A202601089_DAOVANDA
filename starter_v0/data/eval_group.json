@@ -1,7 +1,263 @@
 {
-  "dataset_id": "day04_v2_research_group",
+  "dataset_id": "day04_v2_research_group_daovanda",
   "dataset_role": "group",
-  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "description": "10 team-authored boundary, routing, correction, and evidence-quality cases: exactly 5 single-turn and 5 multi-turn.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G_S01_missing_account",
+      "phase": "B",
+      "query": "Lấy giúp mình 7 bài đăng mới nhất nhé.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: timeline request without account must pause for a text clarification instead of guessing."
+      }
+    },
+    {
+      "id": "G_S02_audit_sources",
+      "phase": "B",
+      "query": "Kiểm tra chất lượng 2 nguồn này với ngưỡng tối thiểu 2 nguồn: [{\"title\":\"OpenAI update\",\"url\":\"https://openai.com/news/update\",\"source\":\"openai.com\",\"summary\":\"Product update\"},{\"title\":\"Independent analysis\",\"url\":\"https://example.org/analysis\",\"source\":\"example.org\",\"summary\":\"Independent view\"}]",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "min_sources": 2,
+              "require_urls": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: route an explicit quality-check request with existing items to the team's new evidence_audit tool."
+      }
+    },
+    {
+      "id": "G_S03_recent_papers",
+      "phase": "B",
+      "query": "Tìm 3 paper arXiv mới cập nhật về agentic RAG.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "agentic RAG",
+              "max_results": 3,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: distinguish academic-paper search and preserve count plus recency sorting."
+      }
+    },
+    {
+      "id": "G_S04_capability_no_tool",
+      "phase": "B",
+      "query": "Hãy mô tả ngắn gọn các loại nghiên cứu bạn hỗ trợ.",
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: answer a capability question directly without manufacturing a tool call."
+      }
+    },
+    {
+      "id": "G_S05_publish_boundary",
+      "phase": "B",
+      "query": "Gửi bản tổng hợp vừa rồi lên Telegram ngay.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: external publishing must require explicit confirmation before send."
+      }
+    },
+    {
+      "id": "G_M01_topic_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI trong tháng này."
+        },
+        {
+          "role": "user",
+          "content": "Đổi chủ đề sang climate tech."
+        },
+        {
+          "role": "user",
+          "content": "Giữ phạm vi tháng này và chỉ tìm climate tech."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "climate tech",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest topic correction overrides the earlier subject while carrying the timeframe."
+      }
+    },
+    {
+      "id": "G_M02_url_supplied_later",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Đọc bài này rồi tóm tắt giúp mình."
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn gửi mình URL của bài viết nhé."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc URL này: https://openai.com/news/"
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/news/"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: once the missing URL arrives, use fetch rather than asking again or searching broadly."
+      }
+    },
+    {
+      "id": "G_M03_handle_and_count_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk."
+        },
+        {
+          "role": "user",
+          "content": "Đổi sang Sam Altman."
+        },
+        {
+          "role": "user",
+          "content": "Và chỉ lấy 4 tweet thôi."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 4
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: apply both later corrections and do not leak stale handle/count values."
+      }
+    },
+    {
+      "id": "G_M04_audit_after_collection",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mình có hai nguồn: [{\"title\":\"A\",\"url\":\"https://a.example/report\",\"source\":\"a.example\",\"summary\":\"Finding A\"},{\"title\":\"B\",\"url\":\"https://b.example/report\",\"source\":\"b.example\",\"summary\":\"Finding B\"}]"
+        },
+        {
+          "role": "assistant",
+          "content": "Mình đã ghi nhận hai nguồn."
+        },
+        {
+          "role": "user",
+          "content": "Audit các nguồn đó, yêu cầu tối thiểu 2 nguồn và URL bắt buộc."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "min_sources": 2,
+              "require_urls": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: reuse previously supplied evidence items and route the latest audit intent to the new tool."
+      }
+    },
+    {
+      "id": "G_M05_cancel_research",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm tweet top về Gemini."
+        },
+        {
+          "role": "user",
+          "content": "Thôi, hủy yêu cầu tìm kiếm."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ xác nhận là bạn đã dừng, không cần tra cứu."
+        }
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: the latest cancellation must suppress the stale retrieval request."
+      }
+    }
+  ]
 }

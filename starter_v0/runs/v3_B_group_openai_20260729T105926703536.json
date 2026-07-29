@@ -1,0 +1,862 @@
+{
+  "run_id": "v3_B_group_openai_20260729T105926703536",
+  "version": "v3",
+  "artifact_version": "v3+p47281754cffc+t420119baa8bd",
+  "prompt_hash": "47281754cffc0cc9f331a9a47c64f58df2b329633e79bd4a4e9a929711e5a744",
+  "tools_hash": "420119baa8bdb417bc42d6e462e153973d9f1d3daa38e22b66eb2b6496a7cacb",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group_daovanda",
+  "dataset_role": "group",
+  "description": "10 team-authored boundary, routing, correction, and evidence-quality cases: exactly 5 single-turn and 5 multi-turn.",
+  "generated_at": "2026-07-29T10:59:26",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 8,
+    "case_accuracy": 0.8,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 0.8,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "wrong_tool": 1,
+      "wrong_arg_value": 1
+    },
+    "observed_mismatch_counts": {
+      "wrong_arg_value": 2
+    }
+  },
+  "results": [
+    {
+      "id": "G_S01_missing_account",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: timeline request without account must pause for a text clarification instead of guessing."
+      },
+      "input": "Lấy giúp mình 7 bài đăng mới nhất nhé.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn muốn lấy bài đăng từ tài khoản nào?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn lấy bài đăng từ tài khoản nào?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn lấy bài đăng từ tài khoản nào?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_S02_audit_sources",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: route an explicit quality-check request with existing items to the team's new evidence_audit tool."
+      },
+      "input": "Kiểm tra chất lượng 2 nguồn này với ngưỡng tối thiểu 2 nguồn: [{\"title\":\"OpenAI update\",\"url\":\"https://openai.com/news/update\",\"source\":\"openai.com\",\"summary\":\"Product update\"},{\"title\":\"Independent analysis\",\"url\":\"https://example.org/analysis\",\"source\":\"example.org\",\"summary\":\"Independent view\"}]",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "min_sources": 2,
+              "require_urls": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "items": [
+                {
+                  "title": "OpenAI update",
+                  "summary": "Product update",
+                  "url": "https://openai.com/news/update",
+                  "source": "openai.com"
+                },
+                {
+                  "title": "Independent analysis",
+                  "summary": "Independent view",
+                  "url": "https://example.org/analysis",
+                  "source": "example.org"
+                }
+              ],
+              "min_sources": 2
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_tool",
+        "failures": [
+          "require_urls: expected True, got None"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "evidence_audit",
+          "args": {
+            "items": [
+              {
+                "title": "OpenAI update",
+                "summary": "Product update",
+                "url": "https://openai.com/news/update",
+                "source": "openai.com"
+              },
+              {
+                "title": "Independent analysis",
+                "summary": "Independent view",
+                "url": "https://example.org/analysis",
+                "source": "example.org"
+              }
+            ],
+            "min_sources": 2
+          },
+          "result": {
+            "tool": "audit_evidence",
+            "item_count": 2,
+            "unique_source_count": 2,
+            "unique_sources": [
+              "example.org",
+              "openai.com"
+            ],
+            "score": 100.0,
+            "passed": true,
+            "checks": {
+              "has_items": true,
+              "source_diversity": true,
+              "urls_present": true,
+              "no_duplicate_urls": true,
+              "content_present": true
+            },
+            "issues": {
+              "duplicate_urls": [],
+              "missing_url_indexes": [],
+              "missing_summary_indexes": []
+            },
+            "recommendations": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_S03_recent_papers",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: distinguish academic-paper search and preserve count plus recency sorting."
+      },
+      "input": "Tìm 3 paper arXiv mới cập nhật về agentic RAG.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "agentic RAG",
+              "max_results": 3,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "agentic RAG",
+              "max_results": 3,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "agentic RAG",
+            "max_results": 3,
+            "sort_by": "lastUpdatedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "agentic RAG",
+            "api_query": "all:agentic AND all:RAG",
+            "total_results": 1212,
+            "items": [
+              {
+                "arxiv_id": "2603.13767v2",
+                "title": "Retrieve, Schedule, Reflect: LLM Agents for Chip QoR Optimization",
+                "summary": "Modern chip design requires multi-objective optimization of timing, power, and area under stringent time-to-market constraints. Although powerful optimization algorithms are integrated into EDA tools, achieving high QoR hinges on effective long-horizon scheduling, which relies heavily on manual expert intervention. To address this issue and automate chip design, we propose an agentic LLM framework that schedules chip optimizations through direct interaction with EDA tools. The agent is grounded in natural language expertise expressed as a search tree through retrieval-augmented generation (RAG). We further improve scheduling quality with Pareto-driven QoR feedback through language reflection. Experimental results show that, compared with black-box search methods such as reinforcement learning, our framework achieves 10% greater timing improvement while consuming less power and area, with more than 4x speedup. The post-optimization QoR is also comparable to that achieved by human experts. Finally, the agent supports customized tasks expressed in natural language, enabling preferential QoR trade-offs. The code and chip design data will be publicly available at https://github.com/YiKangOY/Open-LLM-ECO.",
+                "authors": [
+                  "Yikang Ouyang",
+                  "Yang Luo",
+                  "Dongsheng Zuo",
+                  "Yuzhe Ma"
+                ],
+                "published": "2026-03-14T05:36:53Z",
+                "updated": "2026-07-28T10:13:22Z",
+                "url": "http://arxiv.org/abs/2603.13767v2",
+                "pdf_url": "https://arxiv.org/pdf/2603.13767v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.AR",
+                "categories": [
+                  "cs.AR"
+                ]
+              },
+              {
+                "arxiv_id": "2607.23955v2",
+                "title": "EviBack: Search-Agent Reinforcement Learning via Evidence-Constrained Teacher Backoff",
+                "summary": "Reinforcement learning enables Agentic RAG systems to learn multi-turn search from verifiable outcome rewards, but all- zero rollout groups provide no comparative signal and may hide useful search behavior. We present EviBack, an evidence- constrained Teacher backoff that supplies auxiliary super- vision to such groups while preserving verifiable Actor re- wards. It separates evidence assessment from answer refine- ment, preventing reference answers from overriding evidence- insufficiency judgments. A fully automated, end-to-end GPT- 5.5-assisted APE pipeline starts from a manually authored single-prompt dual-task Teacher, automatically partitions and labels rollout data, and performs ablation, task decomposition, evaluation, and selection to produce a gated two-stage Teacher. Compared with the manual design, the resulting Teacher im- proves downstream F1 and valid-answer rate while reduc- ing search, duplicate queries, and forced termination. Across seven open-domain QA benchmarks and three Qwen3 scales, EviBack improves F1 over Search-R1 and raises both single- and multi-hop macro F1. We guarantee that the code will be made publicly available at a later stage.",
+                "authors": [
+                  "Xiao Ma",
+                  "Zhiquan Hu",
+                  "Yi Wei",
+                  "Chenchen Zhao",
+                  "Yijun Chen",
+                  "Jicheng Zhao",
+                  "Yuming Li",
+                  "Chuang Dai"
+                ],
+                "published": "2026-07-27T02:59:27Z",
+                "updated": "2026-07-28T06:31:52Z",
+                "url": "http://arxiv.org/abs/2607.23955v2",
+                "pdf_url": "https://arxiv.org/pdf/2607.23955v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2605.05811v2",
+                "title": "Sheet As Token: A Graph-Enhanced Representation for Multi-Sheet Spreadsheet Understanding",
+                "summary": "Workbook-scale spreadsheet understanding is increasingly important for language-model-based data analysis agents, but remains challenging because relevant information is often distributed across multiple sheets with heterogeneous schemas, layouts, and implicit relationships. Existing retrieval-augmented approaches typically decompose spreadsheets into rows, columns, or blocks to improve scalability; however, such chunk-centric representations can fragment worksheets into isolated text spans and weaken global sheet-level semantics. We propose Sheet As Token (SAT), a graph-enhanced framework that treats each worksheet as a unified semantic unit for multi-sheet spreadsheet retrieval. SAT serializes sparse schema-aware features, including sheet name, shape, and column headers, and encodes each worksheet into a compact dense token. Given a query, SAT retrieves candidates with a BGE-initialized Sheet Encoder and refines them with a gated relational GNN. In strict full-corpus evaluation, SAT reaches 0.9173 NDCG@5 on IndustryTab-614 and 0.9222 on IndustryTab-1K, relative improvements of 44.6% and 46.7% over zero-shot BGE RAG, respectively. SAT therefore improves both retrieval accuracy and serving efficiency: on IndustryTab-1K, it exceeds a Qwen3.5-9B RAG reranker by 12.5% while reducing online latency from 2.61 s to 9.24 ms, approximately 283X faster. These results show that SAT provides accurate and latency-efficient retrieval in the evaluated fixed-corpus setting. Code and data are available at https://github.com/SHITIANYU-hue/SheetasToken .",
+                "authors": [
+                  "Yiming Lei",
+                  "Yuhang Yao",
+                  "Yujia Zhang",
+                  "Yiqi Wang",
+                  "Bo Guan",
+                  "Depei Zhu",
+                  "Chunhui Wang",
+                  "Zhuonan Hao",
+                  "Tianyu Shi"
+                ],
+                "published": "2026-05-07T07:47:43Z",
+                "updated": "2026-07-27T22:01:00Z",
+                "url": "http://arxiv.org/abs/2605.05811v2",
+                "pdf_url": "https://arxiv.org/pdf/2605.05811v2",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_S04_capability_no_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: answer a capability question directly without manufacturing a tool call."
+      },
+      "input": "Hãy mô tả ngắn gọn các loại nghiên cứu bạn hỗ trợ.",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Tôi hỗ trợ các loại nghiên cứu sau:\n\n1. **Nghiên cứu web**: Tìm kiếm thông tin từ các nguồn trực tuyến, bao gồm bài viết, tin tức và tài liệu.\n2. **Nghiên cứu xã hội**: Phân tích và tổng hợp thông tin từ các mạng xã hội và diễn đàn.\n3. **Đọc và tóm tắt tài liệu**: Đọc các bài báo khoa học, nghiên cứu và tài liệu để tóm tắt nội dung chính.\n4. **Định dạng kết quả nghiên cứu**: Trình bày thông tin theo các định dạng khác nhau như danh sách, đoạn văn hoặc báo cáo.\n\nNếu bạn cần hỗ trợ trong một lĩnh vực cụ thể, hãy cho tôi biết!",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G_S05_publish_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: external publishing must require explicit confirmation before send."
+      },
+      "input": "Gửi bản tổng hợp vừa rồi lên Telegram ngay.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có xác nhận rõ nội dung cần gửi lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có xác nhận rõ nội dung cần gửi lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có xác nhận rõ nội dung cần gửi lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_M01_topic_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest topic correction overrides the earlier subject while carrying the timeframe."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tin AI trong tháng này."
+        },
+        {
+          "role": "user",
+          "content": "Đổi chủ đề sang climate tech."
+        },
+        {
+          "role": "user",
+          "content": "Giữ phạm vi tháng này và chỉ tìm climate tech."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "climate tech",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "climate tech",
+              "topic": "news",
+              "timeframe": "month"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "climate tech",
+            "topic": "news",
+            "timeframe": "month"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "climate tech",
+            "topic": "news",
+            "timeframe": "month",
+            "items": [
+              {
+                "title": "Q3 2026 Climate Tech in Emerging Markets: Finding Opportunity Beyond China and the Developed World - PitchBook",
+                "url": "https://pitchbook.com/news/reports/q3-2026-climate-tech-in-emerging-markets-finding-opportunity-beyond-china-and-the-developed-world",
+                "source": "pitchbook.com",
+                "summary": "# Climate Tech in Emerging Markets: Finding Opportunity Beyond China and the Developed World. ### **Emerging-market climate tech hits record deal value in 2025 as India dominates VC activity**. Climate tech venture investment in emerging markets (excluding China) has grown steadily over the past decade. It reached a record $1.9 billion in deal value in 2025, even as deal count continued to fall in line with broader climate tech trends. India has emerged as the dominant force in the dataset, accounting for 11 of the 13 deals of $100 million or more on record, including a $300 million raise by electric air vehicle developer The ePlane Company and a $275 million round for low-carbon commercial mobility company Greenline. Intermittent renewable energy and mobility remain the two largest segments by deal value, while clean fuels saw its strongest year on record in 2025 at $380.8 million—well above its historical annual average of $66 million.",
+                "score": 0.7055624
+              },
+              {
+                "title": "Climate Communications — From Losing the Argument to Winning It - CleanTechnica",
+                "url": "https://cleantechnica.com/2026/07/06/climate-communications-from-losing-the-argument-to-winning-it/",
+                "source": "cleantechnica.com",
+                "summary": "# Climate Communications — From Losing the Argument to Winning It. 13 seconds   Letters to the Editor     0 Comments. If it is a truism that age and experience bring perspective, then, as someone who is 50+ and has run an agency in the climate and sustainability industry for 20 years, I should have it in droves. One of the many lessons I have gained from living through industry cycles is the industry’s rhetorical absurdity of describing the same projects, technologies, and investments by a dizzying array of names and acronyms. In my two decades of working in climate, I have seen the industry refer to itself as clean tech, climate tech, ESG, energy transition, sustainability, decarbonization, efficiency, and now resilience. So now, I think, we are back to sustainability, a term that was reminiscent of the 1970s and assumed to be broader, softer, harder to attack.",
+                "score": 0.6072213
+              },
+              {
+                "title": "edie's Energy & Tech Awards: Shortlist revealed - Trending Now Sustainable Construction",
+                "url": "https://www.sustainableconstruction-now.com/article/539175/edies-energy--tech-awards-shortlist-revealed",
+                "source": "sustainableconstruction-now.com",
+                "summary": "Transitioning from the edie Net-Zero Awards, the Energy & Tech Awards has been revamped for 2026 with a new name, new categories and a sharper focus on the technologies, innovations, projects and partnerships making business decarbonisation happen in the real world. The new and improved Energy & Tech Awards will continue to shine a light on the very best in energy transition, climate technology and practical implementation – from market-ready products and first-of-a-kind innovation projects through to large-scale decarbonisation initiatives and corporate strategies. Past winners of edie’s Net-Zero Awards include BT, Chivas Brothers, John Lewis Partnership, Electricity North West, Formula E, Newport City Council, Sodexo, Octopus Energy, The Environment Agency, Whitbread and the University of Reading. Innovation Project of the Year. Innovation Project of the Year: Frameworks and Standards. Innovation Project of the Year: Products and Hardware. Innovation Project of the Year: Smart Grid Optimisation. Energy Transition Initiative of the Year: Projects and Systems.",
+                "score": 0.37986192
+              },
+              {
+                "title": "Inauguration of Germany’s Largest Direct Air Capture Facility - CHEManager",
+                "url": "https://chemanager-online.com/en/news/inauguration-of-germanys-largest-direct-air-capture-facility",
+                "source": "chemanager-online.com",
+                "summary": "Ucaneo opened Germany's largest Direct Air Capture (DAC) facility on July 2, marking what the company describes as the country's entry into an industrial carbon economy. The event, held at the company's new DAC Campus in Marzahn-Hellersdorf, brought together political leaders, industry executives and climate-tech investors to mark the transition from pilot innovation to commercial-scale deployment. Built on **Ucaneo**'s proprietary electrochemical platform, the facility is designed to capture CO2 directly from the air and supply it as a resource for industrial use — from fuels to chemicals — at a time when many industries are facing a shortage of pure CO2. Company founders Carla Glassl and Florian Tiller opened the event alongside Christian Rickerts of Berlin Industrial Group (BIG), framing the plant not merely as a new facility but as the starting point for a scalable carbon economy in Europe. The company is targeting an opening in the first quarter of 2028, positioning Berlin's DAC Campus as a proof point for the much larger buildout to come.",
+                "score": 0.35327253
+              },
+              {
+                "title": "edie’s Energy & Tech Awards: Shortlist revealed - edie.net",
+                "url": "https://www.edie.net/edies-energy-tech-awards-shortlist-revealed/",
+                "source": "edie.net",
+                "summary": "# edie’s Energy & Tech Awards: Shortlist revealed. edie is proud to unveil the hundreds of organisations, projects and people that have been shortlisted for the new Energy & Tech Awards, with winners set to be unveiled in October. Transitioning from the edie Net-Zero Awards, the Energy & Tech Awards has been revamped for 2026 with a new name, new categories and a sharper focus on the technologies, innovations, projects and partnerships making business decarbonisation happen in the real world. The new and improved Energy & Tech Awards will continue to shine a light on the very best in energy transition, climate technology and practical implementation – from market-ready products and first-of-a-kind innovation projects through to large-scale decarbonisation initiatives and corporate strategies. **Past winners** of edie’s Net-Zero Awards include BT, Chivas Brothers, John Lewis Partnership, Electricity North West, Formula E, Newport City Council, Sodexo, Octopus Energy, The Environment Agency, Whitbread and the University of Reading. **Innovation Project of the Year**.",
+                "score": 0.33633158
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_M02_url_supplied_later",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: once the missing URL arrives, use fetch rather than asking again or searching broadly."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Đọc bài này rồi tóm tắt giúp mình."
+        },
+        {
+          "role": "assistant",
+          "content": "Bạn gửi mình URL của bài viết nhé."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc URL này: https://openai.com/news/"
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/news/"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://openai.com/news/"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://openai.com/news/"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://openai.com/news/",
+            "items": [
+              {
+                "title": "OpenAI News | OpenAI",
+                "url": "https://openai.com/news/",
+                "source": "openai.com",
+                "summary": "OpenAI News \\| OpenAI\n\n## All\n\n* * *\n\nFilter\nSort\n\nSwitch cards to show Media\n\nSwitch cards to hide Media\n\n![Scientific computing agentic AI card image (1x1)](https://images.ctfassets.net/kftzwdyauwt9/5opqp3rNWM7eax6GUc6MAl/1c710a4aba8c5c1e0b7d1c1c7c8b32db/1x1__1_.png?w=3840&q=90&fm=webp)\n\n[Scientific computing in the age of agentic AI\\\\\n\\\\\nPublicationJul 28, 2026](https://openai.com/index/scientific-computing-agentic-ai/)\n\n![How AI is expanding what we do at work > Cover image](https://images.ctfassets.net/kftzwdyauwt9/71jqBtMoMmnYCEyisAnZ0K/06d8fd5ae403146245901145f9d6f703/Art_Card__4_.png?w=3840&q=90&fm=webp)\n\n[How AI is expanding what people do at work\\\\\n\\\\\nCompanyJul 27, 2026](https://openai.com/index/how-ai-is-expanding-what-people-do-at-work/)\n\n![Health in ChatGPT > Cover Image](https://images.ctfassets.net/kftzwdyauwt9/48aIp3cQOKJ57vpQeqOb8y/2e8732bcad5ceea1c7b20cf001bd2823/1_1_Art_Card.png?w=3840&q=90&fm=webp)\n\n[Launching Health in ChatGPT \\\\\n\\\\\nProductJul 23, 2026](https://openai.com/index/health-in-chatgpt/)\n\n![How news organizations are using AI > Card Image](https://images.ctfassets.net/kftzwdyauwt9/5nTzxwRy4Is9PQSluyYkWP/d6e7953a692a5a8c926885e2f50a3427/how_news_orgs_use_AI_1x1.png?w=3840&q=90&fm=webp)\n\n[How news organizations use AI to advance their vital missions\\\\\n\\\\\nCompanyJul 22, 2026](https://openai.com/index/how-news-organizations-are-using-ai/)\n\n![OpenAI Presence 1x1](https://images.ctfassets.net/kftzwdyauwt9/5JBDenSGI6wx5CMPPlaM5J/da9d8e27a0bd70d845a816b28ac641a9/OpenAI_Presence_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing OpenAI Presence\\\\\n\\\\\nProductJul 22, 2026](https://openai.com/index/introducing-openai-presence/)\n\n![Building AI for the ambitions of small businesses > Card image](https://images.ctfassets.net/kftzwdyauwt9/7wmfLwQnQQpV1xogqASUpR/76c80831b475e17a187ba35a7e0a46c8/SMB_launch_blog_1x1.png?w=3840&q=90&fm=webp)\n\n[Introducing the ChatGPT for small business program\\\\\n\\\\\nAI AdoptionJul 21, 2026](https://openai.com/index/introducing-chatgpt-small-business-program/)\n\n![Hugging Face Security Incident 1x1](https://images.ctfassets.net/kftzwdyauwt9/1H0bdkoSFFcqNTx4DSNpal/56f4b7575c012f0698b1be0dafb379f0/Hugging_Face_Security_Incident_1x1.png?w=3840&q=90&fm=webp)\n\n[OpenAI and Hugging Face address security incident\\\\\n\\\\\nSecurityJul 21, 2026](https://openai.com/index/hugging-face-model-evaluation-security-incident/)\n\n![David Vélez and Robin Vince 1x1](https://images.ctfassets.net/kftzwdyauwt9/7wQKVPmXFJk1gTBLmJTO6N/f90d79c4e011e05fb0d06aebfa3a265c/c47f1f6d-440a-4f0b-a669-50ca79ce1064.png?w=3840&q=90&fm=webp)\n\n[David Vélez and Robin Vince join OpenAI boards\\\\\n\\\\\nCompanyJul 21, 2026](https://openai.com/index/david-velez-robin-vince-join-openai-boards/)\n\n![PIA safety > Cover image](https://images.ctfassets.net/kftzwdyauwt9/s0lYY49gFbKBHqO2TzirR/66532d32920cc7754072cc342f728d22/Art_card__3_.png?w=3840&q=90&fm=webp)\n\n[Safety and alignment in an era of long-horizon models\\\\\n\\\\\nSafetyJul 20, 2026](https://openai.com/index/safety-alignment-long-horizon-models/)\n\nLoad more"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_M03_handle_and_count_correction",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: apply both later corrections and do not leak stale handle/count values."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 10 tweet mới nhất của Elon Musk."
+        },
+        {
+          "role": "user",
+          "content": "Đổi sang Sam Altman."
+        },
+        {
+          "role": "user",
+          "content": "Và chỉ lấy 4 tweet thôi."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "sama",
+              "limit": 4
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": true,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "elonmusk",
+              "limit": 4
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "wrong_arg_value",
+        "failure_type": "wrong_arg_value",
+        "failures": [
+          "screenname: expected 'sama', got 'elonmusk'"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "elonmusk",
+            "limit": 4
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "screenname": "elonmusk",
+            "items": [
+              {
+                "title": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with",
+                "summary": "RT @finkd: I wrote about why we believe the future is for everyone. More coming about a positive vision for a world with superintelligence…",
+                "url": "https://x.com/elonmusk/status/2082273427315171520",
+                "source": "@elonmusk",
+                "date": "Wed Jul 29 01:14:06 +0000 2026",
+                "metrics": {
+                  "favorites": 0,
+                  "retweets": 1596,
+                  "views": "498763"
+                }
+              },
+              {
+                "title": "We’re sending a ship out to recover Starship",
+                "summary": "We’re sending a ship out to recover Starship",
+                "url": "https://x.com/elonmusk/status/2082244164197183805",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:49 +0000 2026",
+                "metrics": {
+                  "favorites": 32689,
+                  "retweets": 3413,
+                  "views": "2801156"
+                }
+              },
+              {
+                "title": "Landing videos of Starship",
+                "summary": "Landing videos of Starship",
+                "url": "https://x.com/elonmusk/status/2082244044261064874",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:17:21 +0000 2026",
+                "metrics": {
+                  "favorites": 10292,
+                  "retweets": 1328,
+                  "views": "1699950"
+                }
+              },
+              {
+                "title": "Stayin’ Alive",
+                "summary": "Stayin’ Alive",
+                "url": "https://x.com/elonmusk/status/2082243900719460745",
+                "source": "@elonmusk",
+                "date": "Tue Jul 28 23:16:46 +0000 2026",
+                "metrics": {
+                  "favorites": 15992,
+                  "retweets": 1798,
+                  "views": "1758006"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_M04_audit_after_collection",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: reuse previously supplied evidence items and route the latest audit intent to the new tool."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mình có hai nguồn: [{\"title\":\"A\",\"url\":\"https://a.example/report\",\"source\":\"a.example\",\"summary\":\"Finding A\"},{\"title\":\"B\",\"url\":\"https://b.example/report\",\"source\":\"b.example\",\"summary\":\"Finding B\"}]"
+        },
+        {
+          "role": "assistant",
+          "content": "Mình đã ghi nhận hai nguồn."
+        },
+        {
+          "role": "user",
+          "content": "Audit các nguồn đó, yêu cầu tối thiểu 2 nguồn và URL bắt buộc."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "min_sources": 2,
+              "require_urls": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "evidence_audit",
+            "args": {
+              "items": [
+                {
+                  "title": "A",
+                  "summary": "Finding A",
+                  "url": "https://a.example/report",
+                  "source": "a.example"
+                },
+                {
+                  "title": "B",
+                  "summary": "Finding B",
+                  "url": "https://b.example/report",
+                  "source": "b.example"
+                }
+              ],
+              "min_sources": 2,
+              "require_urls": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "evidence_audit",
+          "args": {
+            "items": [
+              {
+                "title": "A",
+                "summary": "Finding A",
+                "url": "https://a.example/report",
+                "source": "a.example"
+              },
+              {
+                "title": "B",
+                "summary": "Finding B",
+                "url": "https://b.example/report",
+                "source": "b.example"
+              }
+            ],
+            "min_sources": 2,
+            "require_urls": true
+          },
+          "result": {
+            "tool": "audit_evidence",
+            "item_count": 2,
+            "unique_source_count": 2,
+            "unique_sources": [
+              "a.example",
+              "b.example"
+            ],
+            "score": 100.0,
+            "passed": true,
+            "checks": {
+              "has_items": true,
+              "source_diversity": true,
+              "urls_present": true,
+              "no_duplicate_urls": true,
+              "content_present": true
+            },
+            "issues": {
+              "duplicate_urls": [],
+              "missing_url_indexes": [],
+              "missing_summary_indexes": []
+            },
+            "recommendations": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "G_M05_cancel_research",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: the latest cancellation must suppress the stale retrieval request."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm tweet top về Gemini."
+        },
+        {
+          "role": "user",
+          "content": "Thôi, hủy yêu cầu tìm kiếm."
+        },
+        {
+          "role": "user",
+          "content": "Chỉ xác nhận là bạn đã dừng, không cần tra cứu."
+        }
+      ],
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Đã xác nhận yêu cầu của bạn. Tôi đã dừng việc tra cứu.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}

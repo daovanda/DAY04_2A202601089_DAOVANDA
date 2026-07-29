@@ -1,0 +1,282 @@
+{
+  "run_id": "v3-bonus_B_bonus_openai_20260729T113340477986",
+  "version": "v3-bonus",
+  "artifact_version": "v3-bonus+p47281754cffc+t3d17fc26cdfc",
+  "prompt_hash": "47281754cffc0cc9f331a9a47c64f58df2b329633e79bd4a4e9a929711e5a744",
+  "tools_hash": "3d17fc26cdfcd2667df6479ca9f8ceb1addaa71161fc8028e3bd5b6371b93fd1",
+  "phase": "B",
+  "suite": "bonus",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_bonus.json",
+  "dataset_id": "day04_v2_bonus_tools_daovanda",
+  "dataset_role": "bonus",
+  "description": "Six team-authored cases for the three additional deterministic bonus tools: 3 single-turn and 3 multi-turn.",
+  "generated_at": "2026-07-29T11:33:40",
+  "summary": {
+    "total_cases": 6,
+    "measured_cases": 0,
+    "provider_error_cases": 6,
+    "passed_cases": 0,
+    "case_accuracy": 0.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "B_S01_deduplicate_sources",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: route duplicate-source cleanup and preserve the requested URL/title strategy."
+      },
+      "input": "Deduplicate các nguồn sau theo URL hoặc title, giữ item đầu tiên: [{\"title\":\"A\",\"url\":\"https://example.com/a?utm_source=x\"},{\"title\":\"A copy\",\"url\":\"https://example.com/a\"},{\"title\":\"B\",\"url\":\"https://other.org/b\"}]",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url_or_title"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "B_S02_claim_matrix",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: route claim-to-source mapping and preserve both threshold arguments."
+      },
+      "input": "Tạo claim matrix cho claims [\"AI tự động hóa logistics\", \"Pin lượng tử đã thương mại hóa\"] với sources [{\"title\":\"AI logistics\",\"summary\":\"AI tự động hóa quy trình logistics\",\"url\":\"https://example.com/ai\"},{\"title\":\"Nghiên cứu pin\",\"summary\":\"Thử nghiệm pin lượng tử trong phòng lab\",\"url\":\"https://example.org/battery\"}]. Yêu cầu min_overlap=2 và tối đa 2 source mỗi claim.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 2,
+              "max_sources_per_claim": 2
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "B_S03_bibtex_export",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: choose citation_export rather than general formatting and preserve BibTeX style."
+      },
+      "input": "Xuất BibTeX citation cho nguồn [{\"title\":\"Agentic RAG\",\"authors\":[\"A. Nguyen\"],\"published\":\"2026-07-29\",\"url\":\"https://arxiv.org/abs/2607.12345\"}].",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "bibtex"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "B_M01_deduplicate_strategy_correction",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest deduplication strategy overrides title while carrying source items."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Loại trùng các nguồn theo title."
+        },
+        {
+          "role": "user",
+          "content": "Các nguồn là [{\"title\":\"Report A\",\"url\":\"https://a.example/report\"},{\"title\":\"Another title\",\"url\":\"https://a.example/report?utm_campaign=x\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Sửa lại: deduplicate theo URL và vẫn giữ thứ tự đầu tiên."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url",
+              "preserve_order": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "B_M02_claim_threshold_correction",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: apply corrected claim-matrix thresholds from the latest turn."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tạo claim matrix với min overlap 1 cho claim AI logistics và các source đã gửi."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"AI logistics platform\",\"summary\":\"AI automates logistics operations\",\"url\":\"https://example.com/a\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Với claim matrix này, tăng min_overlap lên 3 và chỉ lấy tối đa 1 source mỗi claim."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 3,
+              "max_sources_per_claim": 1
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    },
+    {
+      "id": "B_M03_citation_style_switch",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest citation-style correction overrides Markdown and preserves no-abstract constraint."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xuất Markdown citation cho các nguồn của mình."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"Research Update\",\"author\":\"A. Nguyen\",\"year\":\"2026\",\"url\":\"https://example.com/update\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Đổi citation export sang APA, không cần abstract."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "apa",
+              "include_abstract": false
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "failure_type": "provider_error",
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": "provider_error",
+        "failures": [
+          "APIConnectionError: Connection error."
+        ],
+        "actual_tool_calls": [],
+        "actual_text": null,
+        "routing_correct": false,
+        "args_correct": false
+      },
+      "tool_results": []
+    }
+  ]
+}
