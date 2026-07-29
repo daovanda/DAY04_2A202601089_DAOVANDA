@@ -1,0 +1,306 @@
+{
+  "transcript_id": "v3-bonus_openai_ui_20260729T120654308968",
+  "version": "v3-bonus",
+  "artifact_version": "v3-bonus+p47281754cffc+t3d17fc26cdfc",
+  "prompt_hash": "47281754cffc0cc9f331a9a47c64f58df2b329633e79bd4a4e9a929711e5a744",
+  "tools_hash": "3d17fc26cdfcd2667df6479ca9f8ceb1addaa71161fc8028e3bd5b6371b93fd1",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-07-29T12:06:54",
+  "updated_at": "2026-07-29T12:16:24",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T12:07:37",
+      "user": " hãy tóm tắt paper attention is all you need",
+      "status": "answered",
+      "assistant_text": "Bài báo \"Attention is All You Need\" giới thiệu kiến trúc Transformer, một mô hình học sâu mới cho các tác vụ xử lý ngôn ngữ tự nhiên. Dưới đây là tóm tắt các điểm chính:\n\n1. **Kiến trúc Transformer**: Khác với các mô hình trước đó như RNN và LSTM, Transformer hoàn toàn dựa vào cơ chế attention, cho phép xử lý các từ trong một câu song song, thay vì tuần tự.\n\n2. **Cơ chế Attention**: Mô hình sử dụng multi-head self-attention để xác định mối quan hệ giữa các từ trong câu, giúp nắm bắt ngữ cảnh tốt hơn.\n\n3. **Hiệu suất**: Transformer cho thấy hiệu suất vượt trội trong các tác vụ dịch máy, với thời gian huấn luyện nhanh hơn và khả năng mở rộng tốt hơn.\n\n4. **Ứng dụng**: Mô hình này đã trở thành nền tảng cho nhiều mô hình ngôn ngữ hiện đại, như BERT và GPT.\n\n5. **Kết quả**: Bài báo chứng minh rằng Transformer có thể đạt được kết quả tốt hơn so với các mô hình trước đó trên nhiều tập dữ liệu khác nhau.\n\nBài báo đã có ảnh hưởng lớn đến lĩnh vực xử lý ngôn ngữ tự nhiên và học sâu.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "Bài báo \"Attention is All You Need\" giới thiệu kiến trúc Transformer, một mô hình học sâu mới cho các tác vụ xử lý ngôn ngữ tự nhiên. Dưới đây là tóm tắt các điểm chính:\n\n1. **Kiến trúc Transformer**: Khác với các mô hình trước đó như RNN và LSTM, Transformer hoàn toàn dựa vào cơ chế attention, cho phép xử lý các từ trong một câu song song, thay vì tuần tự.\n\n2. **Cơ chế Attention**: Mô hình sử dụng multi-head self-attention để xác định mối quan hệ giữa các từ trong câu, giúp nắm bắt ngữ cảnh tốt hơn.\n\n3. **Hiệu suất**: Transformer cho thấy hiệu suất vượt trội trong các tác vụ dịch máy, với thời gian huấn luyện nhanh hơn và khả năng mở rộng tốt hơn.\n\n4. **Ứng dụng**: Mô hình này đã trở thành nền tảng cho nhiều mô hình ngôn ngữ hiện đại, như BERT và GPT.\n\n5. **Kết quả**: Bài báo chứng minh rằng Transformer có thể đạt được kết quả tốt hơn so với các mô hình trước đó trên nhiều tập dữ liệu khác nhau.\n\nBài báo đã có ảnh hưởng lớn đến lĩnh vực xử lý ngôn ngữ tự nhiên và học sâu.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [],
+      "ended_at": "2026-07-29T12:07:51"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T12:09:05",
+      "user": "hãy tìm các bài báo có chủ đề liên quan  attention is all you need",
+      "status": "answered",
+      "assistant_text": "Here are some recent articles related to the topic \"Attention is All You Need\":\n\n1. **[Attention Is All You Need, explained like you're smart and busy](https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f)**  \n   This article explains the Transformer architecture introduced in the original paper, highlighting how self-attention replaces recurrence and enhances parallelism in language models.\n\n2. **[Attention Is All You Need Explained - The Paper That Changed AI](https://parseur.com/blog/attention-is-all-you-need)**  \n   This piece discusses the impact of the Transformer architecture on modern AI systems, emphasizing its ability to process inputs simultaneously and improve understanding of context.\n\n3. **[Transformer Model Explained: Attention Is All You Need](https://www.linkedin.com/posts/alexxubyte_the-most-important-paper-attention-is-all-activity-7404924500187865088-7LDp)**  \n   This article provides insights into how the Transformer model works, focusing on self-attention and its efficiency in capturing long-range context.\n\n4. **[“Attention Is All You Need” — The Paper That Changed AI](https://pls.nd.edu/assets/610941/_attention_is_all_you_need_the_paper_that_changed_ai.pdf)**  \n   This document reviews the significance of the original paper, explaining how it transformed AI by introducing a new way of processing language.\n\n5. **[Forget Attention: Importance-Aware Attention Is All You Need](https://arxiv.org/abs/2606.02332)**  \n   This research paper discusses advancements in attention mechanisms, proposing a new approach that focuses on importance-aware attention.\n\nThese articles provide a range of perspectives on the significance and implications of the Transformer architecture introduced in the original paper.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "Attention is All You Need",
+                "topic": "general",
+                "timeframe": "year",
+                "max_results": 5
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "Attention is All You Need",
+                "topic": "general",
+                "timeframe": "year",
+                "max_results": 5
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "Attention is All You Need",
+                "topic": "general",
+                "timeframe": "year",
+                "items": [
+                  {
+                    "title": "Attention Is All You Need, explained like you're smart and ...",
+                    "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
+                    "source": "medium.com",
+                    "summary": "--\n\nListen\n\nShare\n\n“Attention Is All You Need” (Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, and Polosukhin) is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions. [...] Sign up\n\nSign in\n\nSign up\n\nSign in\n\nUnknown user\n\nMember-only story\n\n# Attention Is All You Need, explained like you’re smart and busy\n\n## How a simple idea — self-attention — replaced recurrence, unlocked parallelism, and reshaped modern language models\n\nAdnan Masood, PhD.\n\n--\n\nListen\n\nShare [...] A Transformer is a model that reads a whole sentence at once and lets each word decide which other words matter to it. That “deciding who matters” is attention. And the “at once” part is why it trains fast.\n\n--\n\n--\n\nAdnan Masood, PhD.\nAdnan Masood, PhD.\n\n## Written by Adnan Masood, PhD.\n\nDr. Adnan Masood is an Engineer, Thought Leader, Author, AI/ML PhD, Stanford Scholar, Harvard Alum, Microsoft Regional Director, and STEM Robotics Coach.\n\nHelp\n\nStatus\n\nAbout\n\nCareers\n\nPress\n\nBlog\n\nStore",
+                    "score": 0.8865877
+                  },
+                  {
+                    "title": "Attention Is All You Need Explained - The Paper That Changed AI",
+                    "url": "https://parseur.com/blog/attention-is-all-you-need",
+                    "source": "parseur.com",
+                    "summary": "The 2017 paper Attention Is All You Need introduced the Transformer architecture, the breakthrough behind modern AI systems like ChatGPT, Claude, and Gemini. By replacing slow sequential processing with attention mechanisms, Transformers made AI faster, more parallelizable, and far better at understanding language, images, and documents.\n\nKey Takeaways: [...] :   The Transformer is an AI architecture introduced in the 2017 paper \"Attention Is All You Need.\" It processes all input simultaneously using attention mechanisms, rather than word by word like older models, enabling faster training and far better understanding of context and long-range relationships. [...] ## The Foundation of Modern AI\n\nWhen the Google researchers published Attention Is All You Need in 2017, they introduced a new architecture for machine translation research. Today, it powers nearly every major AI system we use.\n\nTransformers became the foundation for language models that write and reason, vision models that analyze images, speech systems that transcribe audio, document AI that extracts structured data, and multimodal AI systems that combine text, images, and audio.",
+                    "score": 0.82694983
+                  },
+                  {
+                    "title": "Transformer Model Explained: Attention Is All You Need",
+                    "url": "https://www.linkedin.com/posts/alexxubyte_the-most-important-paper-attention-is-all-activity-7404924500187865088-7LDp",
+                    "source": "linkedin.com",
+                    "summary": "information. Attention scores decide how much each token should borrow from others, forming rich contextual representations. This architecture scales well, trains fast, and works for translation, text generation, images, audio, and more. A Transformer is simply a neural network where inputs talk to each other. That communication is why attention is all we need. [...] making them slow and poor at capturing long-range context. Transformers solve this with self attention. All tokens communicate with each other in parallel, allowing the model to understand context efficiently. Each Transformer block has two parts: a self attention layer for communication, and an MLP layer for refinement. Positional encodings give the model a sense of order. Self attention creates Queries, Keys, and Values. Queries look for relevant Keys, and Values deliver information. [...] to represent particular domains. For example, Sir Isaac Newton created the “jargon” of calculus. Without mastering this jargon, you cannot comprehend the laws of motion and use them in practice (to achieve your goals). The issue with LLMs is that, like any neural networks, they need a lot of data to train on. The core part of their training set is the corpus of natural language therefore, simply because natural language is abundant and jargons are underrepresented. This forces LLM practitioners",
+                    "score": 0.82288796
+                  },
+                  {
+                    "title": "“Attention Is All You Need” — The Paper That Changed AI",
+                    "url": "https://pls.nd.edu/assets/610941/_attention_is_all_you_need_the_paper_that_changed_ai.pdf",
+                    "source": "pls.nd.edu",
+                    "summary": "“Attention Is All You Need” — The Paper That Changed AI In 2017, a group of researchers at Google Brain published a short but world-shaking paper: “Attention Is All You Need.” It introduced the Transformer, a new architecture for processing language that quietly upended the entire field of AI. Since then, Transformers have become the backbone of nearly every major language model—including ChatGPT. So what exactly changed? The Problem with Earlier Models Before the Transformer, most models [...] the scale that makes models like ChatGPT possible. Why It Mattered “Attention Is All You Need” is not just a technical improvement—it was a conceptual shift. It reimagined how machines might \"understand\" language, not by mimicking human speech step-by-step, but by treating language as a spatial field of meaning, where connections can be drawn freely and flexibly. It moved us closer to the dream of AI that can reason, translate, summarize, and even create. A Surprising Side Effect: Reasoning [...] parts of a sentence (or paragraph, or document) to pay attention to. Instead of plodding through word by word, it looks at all the words at once and uses a mathematical system of weights to determine which other words are relevant. This mechanism is called self-attention. For example, in the sentence: \"The animal didn't cross the street because it was too tired.\" A good model needs to understand that \"it\" refers to \"the animal.\" Self-attention lets the model focus on \"animal\" when evaluating",
+                    "score": 0.79254496
+                  },
+                  {
+                    "title": "[2606.02332] Forget Attention: Importance-Aware Attention Is All You Need",
+                    "url": "https://arxiv.org/abs/2606.02332",
+                    "source": "arxiv.org",
+                    "summary": "Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\n\nHave an idea for a project that will add value for arXiv's community? Learn more about arXivLabs.\n\nSimons Foundation\nSimons Foundation International\nSchmidt Sciences [...] archive\n\n# Computer Science > Artificial Intelligence\n\n# Title:Forget Attention: Importance-Aware Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 20 pages, 6 figures, 25 tables |\n| Subjects: | Artificial Intelligence (cs.AI); Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| ACM classes: | I.2.7; I.2.6 |\n| Cite as: | arXiv:2606.02332 [cs.AI] |\n|  | (or  arXiv:2606.02332v2 [cs.AI] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite | [...] ## Submission history\n\n## Access Paper:\n\n### Current browse context:\n\n### References & Citations\n\n## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and Search Tools\n\n# arXivLabs: experimental projects with community collaborators\n\narXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.",
+                    "score": 0.7557276
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here are some recent articles related to the topic \"Attention is All You Need\":\n\n1. **[Attention Is All You Need, explained like you're smart and busy](https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f)**  \n   This article explains the Transformer architecture introduced in the original paper, highlighting how self-attention replaces recurrence and enhances parallelism in language models.\n\n2. **[Attention Is All You Need Explained - The Paper That Changed AI](https://parseur.com/blog/attention-is-all-you-need)**  \n   This piece discusses the impact of the Transformer architecture on modern AI systems, emphasizing its ability to process inputs simultaneously and improve understanding of context.\n\n3. **[Transformer Model Explained: Attention Is All You Need](https://www.linkedin.com/posts/alexxubyte_the-most-important-paper-attention-is-all-activity-7404924500187865088-7LDp)**  \n   This article provides insights into how the Transformer model works, focusing on self-attention and its efficiency in capturing long-range context.\n\n4. **[“Attention Is All You Need” — The Paper That Changed AI](https://pls.nd.edu/assets/610941/_attention_is_all_you_need_the_paper_that_changed_ai.pdf)**  \n   This document reviews the significance of the original paper, explaining how it transformed AI by introducing a new way of processing language.\n\n5. **[Forget Attention: Importance-Aware Attention Is All You Need](https://arxiv.org/abs/2606.02332)**  \n   This research paper discusses advancements in attention mechanisms, proposing a new approach that focuses on importance-aware attention.\n\nThese articles provide a range of perspectives on the significance and implications of the Transformer architecture introduced in the original paper.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Attention is All You Need",
+            "topic": "general",
+            "timeframe": "year",
+            "max_results": 5
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Attention is All You Need",
+            "topic": "general",
+            "timeframe": "year",
+            "items": [
+              {
+                "title": "Attention Is All You Need, explained like you're smart and ...",
+                "url": "https://medium.com/@adnanmasood/attention-is-all-you-need-explained-like-youre-smart-and-busy-2a3d7436144f",
+                "source": "medium.com",
+                "summary": "--\n\nListen\n\nShare\n\n“Attention Is All You Need” (Vaswani, Shazeer, Parmar, Uszkoreit, Jones, Gomez, Kaiser, and Polosukhin) is the 2017 NeurIPS paper from Google Brain/Google Research that introduced the Transformer, a sequence-to-sequence architecture built entirely on attention, eliminating recurrence and convolutions. [...] Sign up\n\nSign in\n\nSign up\n\nSign in\n\nUnknown user\n\nMember-only story\n\n# Attention Is All You Need, explained like you’re smart and busy\n\n## How a simple idea — self-attention — replaced recurrence, unlocked parallelism, and reshaped modern language models\n\nAdnan Masood, PhD.\n\n--\n\nListen\n\nShare [...] A Transformer is a model that reads a whole sentence at once and lets each word decide which other words matter to it. That “deciding who matters” is attention. And the “at once” part is why it trains fast.\n\n--\n\n--\n\nAdnan Masood, PhD.\nAdnan Masood, PhD.\n\n## Written by Adnan Masood, PhD.\n\nDr. Adnan Masood is an Engineer, Thought Leader, Author, AI/ML PhD, Stanford Scholar, Harvard Alum, Microsoft Regional Director, and STEM Robotics Coach.\n\nHelp\n\nStatus\n\nAbout\n\nCareers\n\nPress\n\nBlog\n\nStore",
+                "score": 0.8865877
+              },
+              {
+                "title": "Attention Is All You Need Explained - The Paper That Changed AI",
+                "url": "https://parseur.com/blog/attention-is-all-you-need",
+                "source": "parseur.com",
+                "summary": "The 2017 paper Attention Is All You Need introduced the Transformer architecture, the breakthrough behind modern AI systems like ChatGPT, Claude, and Gemini. By replacing slow sequential processing with attention mechanisms, Transformers made AI faster, more parallelizable, and far better at understanding language, images, and documents.\n\nKey Takeaways: [...] :   The Transformer is an AI architecture introduced in the 2017 paper \"Attention Is All You Need.\" It processes all input simultaneously using attention mechanisms, rather than word by word like older models, enabling faster training and far better understanding of context and long-range relationships. [...] ## The Foundation of Modern AI\n\nWhen the Google researchers published Attention Is All You Need in 2017, they introduced a new architecture for machine translation research. Today, it powers nearly every major AI system we use.\n\nTransformers became the foundation for language models that write and reason, vision models that analyze images, speech systems that transcribe audio, document AI that extracts structured data, and multimodal AI systems that combine text, images, and audio.",
+                "score": 0.82694983
+              },
+              {
+                "title": "Transformer Model Explained: Attention Is All You Need",
+                "url": "https://www.linkedin.com/posts/alexxubyte_the-most-important-paper-attention-is-all-activity-7404924500187865088-7LDp",
+                "source": "linkedin.com",
+                "summary": "information. Attention scores decide how much each token should borrow from others, forming rich contextual representations. This architecture scales well, trains fast, and works for translation, text generation, images, audio, and more. A Transformer is simply a neural network where inputs talk to each other. That communication is why attention is all we need. [...] making them slow and poor at capturing long-range context. Transformers solve this with self attention. All tokens communicate with each other in parallel, allowing the model to understand context efficiently. Each Transformer block has two parts: a self attention layer for communication, and an MLP layer for refinement. Positional encodings give the model a sense of order. Self attention creates Queries, Keys, and Values. Queries look for relevant Keys, and Values deliver information. [...] to represent particular domains. For example, Sir Isaac Newton created the “jargon” of calculus. Without mastering this jargon, you cannot comprehend the laws of motion and use them in practice (to achieve your goals). The issue with LLMs is that, like any neural networks, they need a lot of data to train on. The core part of their training set is the corpus of natural language therefore, simply because natural language is abundant and jargons are underrepresented. This forces LLM practitioners",
+                "score": 0.82288796
+              },
+              {
+                "title": "“Attention Is All You Need” — The Paper That Changed AI",
+                "url": "https://pls.nd.edu/assets/610941/_attention_is_all_you_need_the_paper_that_changed_ai.pdf",
+                "source": "pls.nd.edu",
+                "summary": "“Attention Is All You Need” — The Paper That Changed AI In 2017, a group of researchers at Google Brain published a short but world-shaking paper: “Attention Is All You Need.” It introduced the Transformer, a new architecture for processing language that quietly upended the entire field of AI. Since then, Transformers have become the backbone of nearly every major language model—including ChatGPT. So what exactly changed? The Problem with Earlier Models Before the Transformer, most models [...] the scale that makes models like ChatGPT possible. Why It Mattered “Attention Is All You Need” is not just a technical improvement—it was a conceptual shift. It reimagined how machines might \"understand\" language, not by mimicking human speech step-by-step, but by treating language as a spatial field of meaning, where connections can be drawn freely and flexibly. It moved us closer to the dream of AI that can reason, translate, summarize, and even create. A Surprising Side Effect: Reasoning [...] parts of a sentence (or paragraph, or document) to pay attention to. Instead of plodding through word by word, it looks at all the words at once and uses a mathematical system of weights to determine which other words are relevant. This mechanism is called self-attention. For example, in the sentence: \"The animal didn't cross the street because it was too tired.\" A good model needs to understand that \"it\" refers to \"the animal.\" Self-attention lets the model focus on \"animal\" when evaluating",
+                "score": 0.79254496
+              },
+              {
+                "title": "[2606.02332] Forget Attention: Importance-Aware Attention Is All You Need",
+                "url": "https://arxiv.org/abs/2606.02332",
+                "source": "arxiv.org",
+                "summary": "Both individuals and organizations that work with arXivLabs have embraced and accepted our values of openness, community, excellence, and user data privacy. arXiv is committed to these values and only works with partners that adhere to them.\n\nHave an idea for a project that will add value for arXiv's community? Learn more about arXivLabs.\n\nSimons Foundation\nSimons Foundation International\nSchmidt Sciences [...] archive\n\n# Computer Science > Artificial Intelligence\n\n# Title:Forget Attention: Importance-Aware Attention Is All You Need\n\n|  |  |\n --- |\n| Comments: | 20 pages, 6 figures, 25 tables |\n| Subjects: | Artificial Intelligence (cs.AI); Computation and Language (cs.CL); Machine Learning (cs.LG) |\n| ACM classes: | I.2.7; I.2.6 |\n| Cite as: | arXiv:2606.02332 [cs.AI] |\n|  | (or  arXiv:2606.02332v2 [cs.AI] for this version) |\n|  |  Focus to learn more  arXiv-issued DOI via DataCite | [...] ## Submission history\n\n## Access Paper:\n\n### Current browse context:\n\n### References & Citations\n\n## BibTeX formatted citation\n\n### Bookmark\n\nBibSonomy\nReddit\n\n# Bibliographic and Citation Tools\n\n# Code, Data and Media Associated with this Article\n\n# Demos\n\n# Recommenders and Search Tools\n\n# arXivLabs: experimental projects with community collaborators\n\narXivLabs is a framework that allows collaborators to develop and share new arXiv features directly on our website.",
+                "score": 0.7557276
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:09:19"
+    },
+    {
+      "turn_index": 3,
+      "started_at": "2026-07-29T12:16:11",
+      "user": "hãy searrch và đọc bài báo sau đó tóm tắt giúp tooi",
+      "status": "answered",
+      "assistant_text": "Here are some recent articles related to the paper \"Attention Is All You Need\":\n\n1. **[What Nobody Explains About How a Transformer Actually Works](https://www.thinkdifferent.blog/blog/what-nobody-explains-about-how-a-transformer-actually-works)**  \n   This article discusses the significance of the Transformer architecture introduced in the 2017 paper, emphasizing that while it has been widely cited, many people struggle to explain the attention mechanism in detail. The author argues that understanding this mechanism is crucial for making informed decisions about deploying large language models.\n\n2. **[Transformers vs RNNs: Attention Is All You Need](https://www.linkedin.com/posts/okyashgajjar_just-finished-reading-attention-is-all-you-activity-7485759895166685185-XGOG)**  \n   This post highlights the foundational elements of the Transformer model, including the importance of attention mechanisms compared to traditional RNNs and LSTMs.\n\n3. **[I'm almost done replicating the \"Transformer\" architecture ...](https://x.com/AdityaPat_/status/2081044449615134743)**  \n   A social media post discussing the replication of the Transformer architecture and exploring ideas for creating a \"Tiny GPT\" model based on it.\n\nThese articles provide insights into the impact and understanding of the Transformer architecture and its attention mechanism. If you need a specific paper summarized, please provide the URL.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "Attention Is All You Need",
+                "topic": "general"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "Attention Is All You Need",
+                "topic": "general"
+              },
+              "result": {
+                "tool": "web_search",
+                "query": "Attention Is All You Need",
+                "topic": "general",
+                "timeframe": "week",
+                "items": [
+                  {
+                    "title": "What Nobody Explains About How a Transformer… | Think Different",
+                    "url": "https://www.thinkdifferent.blog/blog/what-nobody-explains-about-how-a-transformer-actually-works",
+                    "source": "thinkdifferent.blog",
+                    "summary": "The 2017 paper “Attention Is All You Need” has been cited over 100,000 times. It introduced the transformer architecture that underlies GPT-4, Claude, Gemini, and essentially every large language model running today. Most people in the industry can tell you it exists. Very few can tell you what the attention mechanism actually does, at a level of precision that would let you reason about why it works or when it fails. [...] The distinction matters more now than it did in 2017, when these systems were curiosities. It matters now because we’re making decisions — about deployment, about trust, about risk — based on assumptions about what large language models can and can’t do. Those assumptions are better if they’re grounded in what the mechanism actually is.\n\nAttention is all you need, the paper said. What attention is, though — that part they left for everyone else to figure out. [...] Skip to content\n\nWhat Nobody Explains About How a Transformer Actually Works\n\nPhoto: Unsplash\n\nFirst Principles\n\n# What Nobody Explains About How a Transformer Actually Works\n\nThe 'Attention Is All You Need' paper is one of the most cited in history — and almost nobody who cites it can explain what attention actually does\n\nBy Jakub Jirák • • 7 min read\n\ntransformersmachine-learningattention-mechanismfirst-principlesartificial-intelligence",
+                    "score": 0.7253574
+                  },
+                  {
+                    "title": "Transformers vs RNNs: Attention Is All You Need",
+                    "url": "https://www.linkedin.com/posts/okyashgajjar_just-finished-reading-attention-is-all-you-activity-7485759895166685185-XGOG",
+                    "source": "linkedin.com",
+                    "summary": "Transformer (\"Attention Is All You Need\") Without perceptrons, backpropagation, RNNs, LSTMs, embeddings, and attention, there would be no Transformer.",
+                    "score": 0.61112726
+                  },
+                  {
+                    "title": "I'm almost done replicating the \"Transformer\" architecture ...",
+                    "url": "https://x.com/AdityaPat_/status/2081044449615134743",
+                    "source": "x.com",
+                    "summary": "\"Attention Is All You Need.\" One idea is to turn it into a \"Tiny GPT\" by adding an LM head and autoregressive generation. Basically mimicking GPT-2, then",
+                    "score": 0.5401241
+                  },
+                  {
+                    "title": "Instagram",
+                    "url": "https://www.instagram.com/gayatri.tech/reel/DbVXkxeNJ6X",
+                    "source": "instagram.com",
+                    "summary": "gayatri.tech's profile picture\nVideo by Gayatri Agrawal on July 28, 2026. May be a Twitter screenshot of screen and text.\ngayatri.tech's profile picture\ngayatri.tech's profile picture\nlovelyduttaspeaks's profile picture\nPhoto by Gayatri Agrawal on July 17, 2026.\nPhoto by Gayatri Agrawal on February 19, 2026.\nPhoto by Gayatri Agrawal on May 01, 2026.\nVideo by Gayatri Agrawal on July 23, 2026. May be an image of office and text that says 'Agent Swarm Architecture VLO MeTo'. [...] Video by Gayatri Agrawal on July 21, 2026. May be an image of screen, thermostat, timer, dental floss and text.\nVideo by Gayatri Agrawal on July 16, 2026. May be a selfie of one or more people, makeup, people smiling and text that says 'CLAUDE CLAUDEIS IS'.\nVideo by Gayatri Agrawal on July 15, 2026. May be a selfie of one or more people, people standing, magazine, poster and text. [...] Video by Gayatri Agrawal on July 14, 2026. May be a selfie of one or more people, thermostat, screen, office and text that says 'FIFTH IS DATA CONTROL.'.\nVideo by Gayatri Agrawal on July 13, 2026. May be an image of bust, mannequin, costume and text.",
+                    "score": 0.061927155
+                  },
+                  {
+                    "title": "Instagram",
+                    "url": "https://www.instagram.com/reel/DbRM-hUSUH9",
+                    "source": "instagram.com",
+                    "summary": "Video by Danica Simic on July 23, 2026. May be an illustration of calendar, clipboard, poster, crossword puzzle and text that says 'lolo100' GetunlimitedacceSs access to cutting- edge Higgsfield models for the next 7 days'.\n\nVideo by Danica Simic on July 23, 2026. May be a video game screenshot of text that says 'He said I gave him a broken heart syndrome so built a ML model that predicts heart disease to see if he's gaslighting me'.\n\nSee more posts\n\n--- [...] sanfranciscoviibes's profile picture\n\nsanfranciscoviibes\n\nsend me this post\n\nReply\n\n231\n\nLog in to like or comment.\n\nMore posts from codingmermaid.ai\n\nPhoto by Danica Simic on November 23, 2025.\n\nVideo by Danica Simic on October 10, 2025.\n\nVideo by Danica Simic on August 07, 2025. [...] You do not need to understand every equation on your first read. Focus on the problem, the proposed solution, and why it mattered.  \n  \nSave this list and choose one paper to read first this week",
+                    "score": 0.050242126
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Here are some recent articles related to the paper \"Attention Is All You Need\":\n\n1. **[What Nobody Explains About How a Transformer Actually Works](https://www.thinkdifferent.blog/blog/what-nobody-explains-about-how-a-transformer-actually-works)**  \n   This article discusses the significance of the Transformer architecture introduced in the 2017 paper, emphasizing that while it has been widely cited, many people struggle to explain the attention mechanism in detail. The author argues that understanding this mechanism is crucial for making informed decisions about deploying large language models.\n\n2. **[Transformers vs RNNs: Attention Is All You Need](https://www.linkedin.com/posts/okyashgajjar_just-finished-reading-attention-is-all-you-activity-7485759895166685185-XGOG)**  \n   This post highlights the foundational elements of the Transformer model, including the importance of attention mechanisms compared to traditional RNNs and LSTMs.\n\n3. **[I'm almost done replicating the \"Transformer\" architecture ...](https://x.com/AdityaPat_/status/2081044449615134743)**  \n   A social media post discussing the replication of the Transformer architecture and exploring ideas for creating a \"Tiny GPT\" model based on it.\n\nThese articles provide insights into the impact and understanding of the Transformer architecture and its attention mechanism. If you need a specific paper summarized, please provide the URL.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Attention Is All You Need",
+            "topic": "general"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Attention Is All You Need",
+            "topic": "general",
+            "timeframe": "week",
+            "items": [
+              {
+                "title": "What Nobody Explains About How a Transformer… | Think Different",
+                "url": "https://www.thinkdifferent.blog/blog/what-nobody-explains-about-how-a-transformer-actually-works",
+                "source": "thinkdifferent.blog",
+                "summary": "The 2017 paper “Attention Is All You Need” has been cited over 100,000 times. It introduced the transformer architecture that underlies GPT-4, Claude, Gemini, and essentially every large language model running today. Most people in the industry can tell you it exists. Very few can tell you what the attention mechanism actually does, at a level of precision that would let you reason about why it works or when it fails. [...] The distinction matters more now than it did in 2017, when these systems were curiosities. It matters now because we’re making decisions — about deployment, about trust, about risk — based on assumptions about what large language models can and can’t do. Those assumptions are better if they’re grounded in what the mechanism actually is.\n\nAttention is all you need, the paper said. What attention is, though — that part they left for everyone else to figure out. [...] Skip to content\n\nWhat Nobody Explains About How a Transformer Actually Works\n\nPhoto: Unsplash\n\nFirst Principles\n\n# What Nobody Explains About How a Transformer Actually Works\n\nThe 'Attention Is All You Need' paper is one of the most cited in history — and almost nobody who cites it can explain what attention actually does\n\nBy Jakub Jirák • • 7 min read\n\ntransformersmachine-learningattention-mechanismfirst-principlesartificial-intelligence",
+                "score": 0.7253574
+              },
+              {
+                "title": "Transformers vs RNNs: Attention Is All You Need",
+                "url": "https://www.linkedin.com/posts/okyashgajjar_just-finished-reading-attention-is-all-you-activity-7485759895166685185-XGOG",
+                "source": "linkedin.com",
+                "summary": "Transformer (\"Attention Is All You Need\") Without perceptrons, backpropagation, RNNs, LSTMs, embeddings, and attention, there would be no Transformer.",
+                "score": 0.61112726
+              },
+              {
+                "title": "I'm almost done replicating the \"Transformer\" architecture ...",
+                "url": "https://x.com/AdityaPat_/status/2081044449615134743",
+                "source": "x.com",
+                "summary": "\"Attention Is All You Need.\" One idea is to turn it into a \"Tiny GPT\" by adding an LM head and autoregressive generation. Basically mimicking GPT-2, then",
+                "score": 0.5401241
+              },
+              {
+                "title": "Instagram",
+                "url": "https://www.instagram.com/gayatri.tech/reel/DbVXkxeNJ6X",
+                "source": "instagram.com",
+                "summary": "gayatri.tech's profile picture\nVideo by Gayatri Agrawal on July 28, 2026. May be a Twitter screenshot of screen and text.\ngayatri.tech's profile picture\ngayatri.tech's profile picture\nlovelyduttaspeaks's profile picture\nPhoto by Gayatri Agrawal on July 17, 2026.\nPhoto by Gayatri Agrawal on February 19, 2026.\nPhoto by Gayatri Agrawal on May 01, 2026.\nVideo by Gayatri Agrawal on July 23, 2026. May be an image of office and text that says 'Agent Swarm Architecture VLO MeTo'. [...] Video by Gayatri Agrawal on July 21, 2026. May be an image of screen, thermostat, timer, dental floss and text.\nVideo by Gayatri Agrawal on July 16, 2026. May be a selfie of one or more people, makeup, people smiling and text that says 'CLAUDE CLAUDEIS IS'.\nVideo by Gayatri Agrawal on July 15, 2026. May be a selfie of one or more people, people standing, magazine, poster and text. [...] Video by Gayatri Agrawal on July 14, 2026. May be a selfie of one or more people, thermostat, screen, office and text that says 'FIFTH IS DATA CONTROL.'.\nVideo by Gayatri Agrawal on July 13, 2026. May be an image of bust, mannequin, costume and text.",
+                "score": 0.061927155
+              },
+              {
+                "title": "Instagram",
+                "url": "https://www.instagram.com/reel/DbRM-hUSUH9",
+                "source": "instagram.com",
+                "summary": "Video by Danica Simic on July 23, 2026. May be an illustration of calendar, clipboard, poster, crossword puzzle and text that says 'lolo100' GetunlimitedacceSs access to cutting- edge Higgsfield models for the next 7 days'.\n\nVideo by Danica Simic on July 23, 2026. May be a video game screenshot of text that says 'He said I gave him a broken heart syndrome so built a ML model that predicts heart disease to see if he's gaslighting me'.\n\nSee more posts\n\n--- [...] sanfranciscoviibes's profile picture\n\nsanfranciscoviibes\n\nsend me this post\n\nReply\n\n231\n\nLog in to like or comment.\n\nMore posts from codingmermaid.ai\n\nPhoto by Danica Simic on November 23, 2025.\n\nVideo by Danica Simic on October 10, 2025.\n\nVideo by Danica Simic on August 07, 2025. [...] You do not need to understand every equation on your first read. Focus on the problem, the proposed solution, and why it mattered.  \n  \nSave this list and choose one paper to read first this week",
+                "score": 0.050242126
+              }
+            ]
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T12:16:24"
+    }
+  ]
+}

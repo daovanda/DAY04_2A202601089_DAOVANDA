@@ -1,0 +1,653 @@
+{
+  "run_id": "v3-bonus_B_bonus_openai_20260729T113443811945",
+  "version": "v3-bonus",
+  "artifact_version": "v3-bonus+p47281754cffc+t3d17fc26cdfc",
+  "prompt_hash": "47281754cffc0cc9f331a9a47c64f58df2b329633e79bd4a4e9a929711e5a744",
+  "tools_hash": "3d17fc26cdfcd2667df6479ca9f8ceb1addaa71161fc8028e3bd5b6371b93fd1",
+  "phase": "B",
+  "suite": "bonus",
+  "provider": "openai",
+  "model": "gpt-4o-mini",
+  "system_prompt": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\All_Vin\\day4\\DAY04_2A202601089_DAOVANDA\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_bonus.json",
+  "dataset_id": "day04_v2_bonus_tools_daovanda",
+  "dataset_role": "bonus",
+  "description": "Six team-authored cases for the three additional deterministic bonus tools: 3 single-turn and 3 multi-turn.",
+  "generated_at": "2026-07-29T11:34:43",
+  "summary": {
+    "total_cases": 6,
+    "measured_cases": 6,
+    "provider_error_cases": 0,
+    "passed_cases": 6,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "B_S01_deduplicate_sources",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: route duplicate-source cleanup and preserve the requested URL/title strategy."
+      },
+      "input": "Deduplicate các nguồn sau theo URL hoặc title, giữ item đầu tiên: [{\"title\":\"A\",\"url\":\"https://example.com/a?utm_source=x\"},{\"title\":\"A copy\",\"url\":\"https://example.com/a\"},{\"title\":\"B\",\"url\":\"https://other.org/b\"}]",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url_or_title"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "items": [
+                {
+                  "title": "A",
+                  "url": "https://example.com/a?utm_source=x"
+                },
+                {
+                  "title": "A copy",
+                  "url": "https://example.com/a"
+                },
+                {
+                  "title": "B",
+                  "url": "https://other.org/b"
+                }
+              ],
+              "strategy": "url_or_title",
+              "preserve_order": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "source_deduplicate",
+          "args": {
+            "items": [
+              {
+                "title": "A",
+                "url": "https://example.com/a?utm_source=x"
+              },
+              {
+                "title": "A copy",
+                "url": "https://example.com/a"
+              },
+              {
+                "title": "B",
+                "url": "https://other.org/b"
+              }
+            ],
+            "strategy": "url_or_title",
+            "preserve_order": true
+          },
+          "result": {
+            "tool": "deduplicate_sources",
+            "strategy": "url_or_title",
+            "preserve_order": true,
+            "input_count": 3,
+            "unique_count": 2,
+            "removed_count": 1,
+            "unique_items": [
+              {
+                "title": "A",
+                "url": "https://example.com/a?utm_source=x"
+              },
+              {
+                "title": "B",
+                "url": "https://other.org/b"
+              }
+            ],
+            "duplicate_groups": [
+              {
+                "key": "url:https://example.com/a",
+                "kept_index": 0,
+                "duplicate_indexes": [
+                  1
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B_S02_claim_matrix",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: route claim-to-source mapping and preserve both threshold arguments."
+      },
+      "input": "Tạo claim matrix cho claims [\"AI tự động hóa logistics\", \"Pin lượng tử đã thương mại hóa\"] với sources [{\"title\":\"AI logistics\",\"summary\":\"AI tự động hóa quy trình logistics\",\"url\":\"https://example.com/ai\"},{\"title\":\"Nghiên cứu pin\",\"summary\":\"Thử nghiệm pin lượng tử trong phòng lab\",\"url\":\"https://example.org/battery\"}]. Yêu cầu min_overlap=2 và tối đa 2 source mỗi claim.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 2,
+              "max_sources_per_claim": 2
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "claims": [
+                "AI tự động hóa logistics",
+                "Pin lượng tử đã thương mại hóa"
+              ],
+              "sources": [
+                {
+                  "title": "AI logistics",
+                  "summary": "AI tự động hóa quy trình logistics",
+                  "url": "https://example.com/ai"
+                },
+                {
+                  "title": "Nghiên cứu pin",
+                  "summary": "Thử nghiệm pin lượng tử trong phòng lab",
+                  "url": "https://example.org/battery"
+                }
+              ],
+              "min_overlap": 2,
+              "max_sources_per_claim": 2
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "claim_matrix",
+          "args": {
+            "claims": [
+              "AI tự động hóa logistics",
+              "Pin lượng tử đã thương mại hóa"
+            ],
+            "sources": [
+              {
+                "title": "AI logistics",
+                "summary": "AI tự động hóa quy trình logistics",
+                "url": "https://example.com/ai"
+              },
+              {
+                "title": "Nghiên cứu pin",
+                "summary": "Thử nghiệm pin lượng tử trong phòng lab",
+                "url": "https://example.org/battery"
+              }
+            ],
+            "min_overlap": 2,
+            "max_sources_per_claim": 2
+          },
+          "result": {
+            "tool": "build_claim_matrix",
+            "claim_count": 2,
+            "source_count": 2,
+            "claims_with_candidates": 2,
+            "coverage_rate": 1.0,
+            "min_overlap": 2,
+            "rows": [
+              {
+                "claim_index": 0,
+                "claim": "AI tự động hóa logistics",
+                "status": "candidate_found",
+                "candidates": [
+                  {
+                    "source_index": 0,
+                    "title": "AI logistics",
+                    "url": "https://example.com/ai",
+                    "source": null,
+                    "matched_terms": [
+                      "ai",
+                      "hoa",
+                      "logistics",
+                      "ong",
+                      "tu"
+                    ],
+                    "overlap_count": 5,
+                    "coverage": 1.0
+                  }
+                ]
+              },
+              {
+                "claim_index": 1,
+                "claim": "Pin lượng tử đã thương mại hóa",
+                "status": "candidate_found",
+                "candidates": [
+                  {
+                    "source_index": 1,
+                    "title": "Nghiên cứu pin",
+                    "url": "https://example.org/battery",
+                    "source": null,
+                    "matched_terms": [
+                      "luong",
+                      "pin",
+                      "tu"
+                    ],
+                    "overlap_count": 3,
+                    "coverage": 0.5
+                  },
+                  {
+                    "source_index": 0,
+                    "title": "AI logistics",
+                    "url": "https://example.com/ai",
+                    "source": null,
+                    "matched_terms": [
+                      "hoa",
+                      "tu"
+                    ],
+                    "overlap_count": 2,
+                    "coverage": 0.3333
+                  }
+                ]
+              }
+            ],
+            "caveat": "Lexical overlap identifies candidate evidence only. It does not verify that a claim is true or that a source entails it."
+          }
+        }
+      ]
+    },
+    {
+      "id": "B_S03_bibtex_export",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Single-turn: choose citation_export rather than general formatting and preserve BibTeX style."
+      },
+      "input": "Xuất BibTeX citation cho nguồn [{\"title\":\"Agentic RAG\",\"authors\":[\"A. Nguyen\"],\"published\":\"2026-07-29\",\"url\":\"https://arxiv.org/abs/2607.12345\"}].",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "bibtex"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "items": [
+                {
+                  "title": "Agentic RAG",
+                  "authors": [
+                    "A. Nguyen"
+                  ],
+                  "published": "2026-07-29",
+                  "url": "https://arxiv.org/abs/2607.12345"
+                }
+              ],
+              "style": "bibtex"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "citation_export",
+          "args": {
+            "items": [
+              {
+                "title": "Agentic RAG",
+                "authors": [
+                  "A. Nguyen"
+                ],
+                "published": "2026-07-29",
+                "url": "https://arxiv.org/abs/2607.12345"
+              }
+            ],
+            "style": "bibtex"
+          },
+          "result": {
+            "tool": "export_citations",
+            "style": "bibtex",
+            "citation_count": 1,
+            "citations": [
+              "@misc{Nguyen2026AgenticRag,\n  title = {Agentic RAG},\n  author = {A. Nguyen},\n  year = {2026},\n  url = {https://arxiv.org/abs/2607.12345}\n}"
+            ],
+            "text": "@misc{Nguyen2026AgenticRag,\n  title = {Agentic RAG},\n  author = {A. Nguyen},\n  year = {2026},\n  url = {https://arxiv.org/abs/2607.12345}\n}"
+          }
+        }
+      ]
+    },
+    {
+      "id": "B_M01_deduplicate_strategy_correction",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest deduplication strategy overrides title while carrying source items."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Loại trùng các nguồn theo title."
+        },
+        {
+          "role": "user",
+          "content": "Các nguồn là [{\"title\":\"Report A\",\"url\":\"https://a.example/report\"},{\"title\":\"Another title\",\"url\":\"https://a.example/report?utm_campaign=x\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Sửa lại: deduplicate theo URL và vẫn giữ thứ tự đầu tiên."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url",
+              "preserve_order": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "items": [
+                {
+                  "title": "Report A",
+                  "url": "https://a.example/report"
+                },
+                {
+                  "title": "Another title",
+                  "url": "https://a.example/report?utm_campaign=x"
+                }
+              ],
+              "strategy": "url",
+              "preserve_order": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "source_deduplicate",
+          "args": {
+            "items": [
+              {
+                "title": "Report A",
+                "url": "https://a.example/report"
+              },
+              {
+                "title": "Another title",
+                "url": "https://a.example/report?utm_campaign=x"
+              }
+            ],
+            "strategy": "url",
+            "preserve_order": true
+          },
+          "result": {
+            "tool": "deduplicate_sources",
+            "strategy": "url",
+            "preserve_order": true,
+            "input_count": 2,
+            "unique_count": 1,
+            "removed_count": 1,
+            "unique_items": [
+              {
+                "title": "Report A",
+                "url": "https://a.example/report"
+              }
+            ],
+            "duplicate_groups": [
+              {
+                "key": "url:https://a.example/report",
+                "kept_index": 0,
+                "duplicate_indexes": [
+                  1
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B_M02_claim_threshold_correction",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: apply corrected claim-matrix thresholds from the latest turn."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tạo claim matrix với min overlap 1 cho claim AI logistics và các source đã gửi."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"AI logistics platform\",\"summary\":\"AI automates logistics operations\",\"url\":\"https://example.com/a\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Với claim matrix này, tăng min_overlap lên 3 và chỉ lấy tối đa 1 source mỗi claim."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 3,
+              "max_sources_per_claim": 1
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "claims": [
+                "AI logistics"
+              ],
+              "sources": [
+                {
+                  "title": "AI logistics platform",
+                  "summary": "AI automates logistics operations",
+                  "url": "https://example.com/a"
+                }
+              ],
+              "min_overlap": 3,
+              "max_sources_per_claim": 1
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "claim_matrix",
+          "args": {
+            "claims": [
+              "AI logistics"
+            ],
+            "sources": [
+              {
+                "title": "AI logistics platform",
+                "summary": "AI automates logistics operations",
+                "url": "https://example.com/a"
+              }
+            ],
+            "min_overlap": 3,
+            "max_sources_per_claim": 1
+          },
+          "result": {
+            "tool": "build_claim_matrix",
+            "claim_count": 1,
+            "source_count": 1,
+            "claims_with_candidates": 0,
+            "coverage_rate": 0.0,
+            "min_overlap": 3,
+            "rows": [
+              {
+                "claim_index": 0,
+                "claim": "AI logistics",
+                "status": "no_candidate",
+                "candidates": []
+              }
+            ],
+            "caveat": "Lexical overlap identifies candidate evidence only. It does not verify that a claim is true or that a source entails it."
+          }
+        }
+      ]
+    },
+    {
+      "id": "B_M03_citation_style_switch",
+      "phase": "B",
+      "suite": "bonus",
+      "case_suite": "bonus",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest citation-style correction overrides Markdown and preserves no-abstract constraint."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Xuất Markdown citation cho các nguồn của mình."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"Research Update\",\"author\":\"A. Nguyen\",\"year\":\"2026\",\"url\":\"https://example.com/update\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Đổi citation export sang APA, không cần abstract."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "apa",
+              "include_abstract": false
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "items": [
+                {
+                  "title": "Research Update",
+                  "author": "A. Nguyen",
+                  "year": "2026",
+                  "url": "https://example.com/update"
+                }
+              ],
+              "style": "apa",
+              "include_abstract": false
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "citation_export",
+          "args": {
+            "items": [
+              {
+                "title": "Research Update",
+                "author": "A. Nguyen",
+                "year": "2026",
+                "url": "https://example.com/update"
+              }
+            ],
+            "style": "apa",
+            "include_abstract": false
+          },
+          "result": {
+            "tool": "export_citations",
+            "style": "apa",
+            "citation_count": 1,
+            "citations": [
+              "A. Nguyen. (2026). Research Update. example.com. https://example.com/update"
+            ],
+            "text": "A. Nguyen. (2026). Research Update. example.com. https://example.com/update"
+          }
+        }
+      ]
+    }
+  ]
+}
