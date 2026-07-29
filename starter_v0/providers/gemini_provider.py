@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import json
 import os
+import re
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -106,11 +108,26 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
-            model=model or self.default_model,
-            contents=contents,
-            config=types.GenerateContentConfig(**config_kwargs),
-        )
+        resp = None
+        for attempt in range(4):
+            try:
+                resp = client.models.generate_content(
+                    model=model or self.default_model,
+                    contents=contents,
+                    config=types.GenerateContentConfig(**config_kwargs),
+                )
+                break
+            except Exception as exc:
+                message = str(exc)
+                if "429" not in message and "RESOURCE_EXHAUSTED" not in message:
+                    raise
+                if attempt == 3:
+                    raise
+                delay_match = re.search(r"retryDelay['\"]?\s*:\s*['\"]?(\d+)", message)
+                retry_after = int(delay_match.group(1)) + 2 if delay_match else 15 * (attempt + 1)
+                time.sleep(min(retry_after, 65))
+        if resp is None:
+            raise RuntimeError("Gemini returned no response")
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []

@@ -28,7 +28,7 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: "Tìm bài đăng theo chủ đề trên Twitter/X ở turn hiện tại. Không dùng cho timeline của một tài khoản, và không dùng nếu turn mới nhất đã hủy Twitter hoặc chuyển kênh sang web."
     parameters:
       type: object
       properties:
@@ -36,9 +36,8 @@ tools:
         search_type: {type: string, enum: [Latest, Top], default: "Latest", description: "Cách sắp xếp"}
         limit: {type: integer, default: 5, description: "Số lượng"}
       required: [query]
-
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: "Tìm kiếm trên web theo intent của turn mới nhất; dùng topic=news cho tin tức. Dùng tool này khi người dùng chuyển từ Twitter/X sang web và không gọi lại social_search cho intent đã bị thay thế."
     parameters:
       type: object
       properties:
@@ -47,7 +46,7 @@ tools:
         timeframe: {type: string, enum: [day, week, month, year], default: "week", description: "Khoảng thời gian"}
         max_results: {type: integer, default: 5, description: "Số kết quả"}
       required: [query]
-
+# End of declared tool catalog.
   - name: fetch
     description: "Lấy nội dung từ một địa chỉ."
     parameters:
@@ -77,28 +76,108 @@ tools:
         headline: {type: string, default: "", description: "Tiêu đề"}
       required: [items, template]
 
-  # ---------------- Bonus tools ----------------
+  - name: evidence_audit
+    description: "Tool mới của nhóm: kiểm tra chất lượng các source item đã có về độ đa dạng nguồn, URL citation, trùng lặp và nội dung. Không dùng để tìm nguồn mới."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          default: []
+          description: "Các source item đã có; mỗi item nên có title/summary, url và source."
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              summary: {type: string}
+              url: {type: string}
+              source: {type: string}
+        min_sources: {type: integer, default: 2, description: "Số domain/tài khoản nguồn khác nhau tối thiểu."}
+        require_urls: {type: boolean, default: true, description: "Yêu cầu mọi item có URL http(s) hợp lệ."}
+      required: [items]
+
+  # ---------------- Team-authored bonus tools ----------------
+  - name: source_deduplicate
+    description: "Tool mới của nhóm: loại source item trùng theo URL canonical hoặc title, giữ thứ tự và trả duplicate groups để audit. Không tìm nguồn mới và không đánh giá độ tin cậy."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          description: "Danh sách source item cần loại trùng."
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              url: {type: string}
+              source: {type: string}
+              summary: {type: string}
+        strategy: {type: string, enum: [url, title, url_or_title], default: "url_or_title", description: "Khóa xác định item trùng."}
+        preserve_order: {type: boolean, default: true, description: "Giữ thứ tự xuất hiện đầu tiên."}
+      required: [items]
+
+  - name: claim_matrix
+    description: "Tool mới của nhóm: ánh xạ danh sách claim với các source candidate bằng lexical overlap và nêu rõ đây không phải xác minh sự thật."
+    parameters:
+      type: object
+      properties:
+        claims:
+          type: array
+          description: "Danh sách claim cần ánh xạ."
+          items: {type: string}
+        sources:
+          type: array
+          description: "Danh sách source item đã có."
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              summary: {type: string}
+              url: {type: string}
+              source: {type: string}
+        min_overlap: {type: integer, default: 2, description: "Số meaningful terms trùng tối thiểu."}
+        max_sources_per_claim: {type: integer, default: 3, description: "Số candidate tối đa cho mỗi claim."}
+      required: [claims, sources]
+
+  - name: citation_export
+    description: "Tool mới của nhóm: xuất các source item đã có thành Markdown references, APA-like hoặc BibTeX; không tự tìm hay bịa metadata còn thiếu."
+    parameters:
+      type: object
+      properties:
+        items:
+          type: array
+          description: "Source items cần xuất citation."
+          items:
+            type: object
+            properties:
+              title: {type: string}
+              url: {type: string}
+              source: {type: string}
+              author: {type: string}
+              authors:
+                type: array
+                items: {type: string}
+              date: {type: string}
+              published: {type: string}
+              year: {type: string}
+              summary: {type: string}
+        style: {type: string, enum: [markdown, apa, bibtex], default: "markdown", description: "Định dạng citation."}
+        include_abstract: {type: boolean, default: false, description: "Kèm summary/note khi có."}
+      required: [items]
+
+  # ---------------- Guarded action ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: "Gửi nội dung lên Telegram chỉ sau khi người dùng đã xác nhận rõ. Nếu chưa xác nhận, không gọi send; gọi clarify với response_type=yes_no trước."
     parameters:
       type: object
       properties:
         text: {type: string, default: "", description: "Nội dung"}
-        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+        confirmed: {type: boolean, default: false, description: "Chỉ true khi người dùng vừa xác nhận rõ"}
       required: [text]
 
-  - name: policy
-    description: "Tìm trong tài liệu nội bộ."
-    parameters:
-      type: object
-      properties:
-        query: {type: string, default: "", description: "Truy vấn"}
-        policy_area: {type: string, enum: [all, ai_research, source_citation, data_privacy, external_publishing, tool_usage], default: "all", description: "Nhóm"}
-        top_k: {type: integer, default: 3, description: "Số mục"}
-      required: [query]
-
+  # ---------------- Research extension used by the team ----------------
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: "Tìm paper khoa học trên arXiv; dùng sort_by=lastUpdatedDate khi người dùng yêu cầu paper mới cập nhật, submittedDate cho paper mới nộp, và relevance cho truy vấn chung."
     parameters:
       type: object
       properties:
@@ -107,12 +186,3 @@ tools:
         sort_by: {type: string, enum: [relevance, lastUpdatedDate, submittedDate], default: "relevance", description: "Sắp xếp"}
       required: [query]
 
-  - name: paper_text
-    description: "Lấy nội dung text của một bài báo."
-    parameters:
-      type: object
-      properties:
-        arxiv_url: {type: string, default: "", description: "ID hoặc địa chỉ"}
-        max_pages: {type: integer, default: 5, description: "Số trang"}
-        max_chars: {type: integer, default: 8000, description: "Số ký tự"}
-      required: [arxiv_url]

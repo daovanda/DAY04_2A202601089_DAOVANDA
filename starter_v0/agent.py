@@ -4,7 +4,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from providers.base import Provider, ToolCall
-from tools import TOOL_FUNCTIONS
+from tools import TOOL_FUNCTIONS, select_relevant_tools
 
 
 @dataclass
@@ -32,7 +32,7 @@ class ResearchAgent:
         messages = [{"role": "system", "content": self.system_prompt}, *user_messages]
         response = self.provider.complete(
             messages,
-            self.tools,
+            select_relevant_tools(messages, self.tools),
             model=self.model,
             temperature=0.0,
             tool_choice=tool_choice,
