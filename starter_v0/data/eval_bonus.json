@@ -1,0 +1,172 @@
+{
+  "dataset_id": "day04_v2_bonus_tools_daovanda",
+  "dataset_role": "bonus",
+  "description": "Six team-authored cases for the three additional deterministic bonus tools: 3 single-turn and 3 multi-turn.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "B_S01_deduplicate_sources",
+      "phase": "B",
+      "query": "Deduplicate các nguồn sau theo URL hoặc title, giữ item đầu tiên: [{\"title\":\"A\",\"url\":\"https://example.com/a?utm_source=x\"},{\"title\":\"A copy\",\"url\":\"https://example.com/a\"},{\"title\":\"B\",\"url\":\"https://other.org/b\"}]",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url_or_title"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: route duplicate-source cleanup and preserve the requested URL/title strategy."
+      }
+    },
+    {
+      "id": "B_S02_claim_matrix",
+      "phase": "B",
+      "query": "Tạo claim matrix cho claims [\"AI tự động hóa logistics\", \"Pin lượng tử đã thương mại hóa\"] với sources [{\"title\":\"AI logistics\",\"summary\":\"AI tự động hóa quy trình logistics\",\"url\":\"https://example.com/ai\"},{\"title\":\"Nghiên cứu pin\",\"summary\":\"Thử nghiệm pin lượng tử trong phòng lab\",\"url\":\"https://example.org/battery\"}]. Yêu cầu min_overlap=2 và tối đa 2 source mỗi claim.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 2,
+              "max_sources_per_claim": 2
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: route claim-to-source mapping and preserve both threshold arguments."
+      }
+    },
+    {
+      "id": "B_S03_bibtex_export",
+      "phase": "B",
+      "query": "Xuất BibTeX citation cho nguồn [{\"title\":\"Agentic RAG\",\"authors\":[\"A. Nguyen\"],\"published\":\"2026-07-29\",\"url\":\"https://arxiv.org/abs/2607.12345\"}].",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "bibtex"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Single-turn: choose citation_export rather than general formatting and preserve BibTeX style."
+      }
+    },
+    {
+      "id": "B_M01_deduplicate_strategy_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Loại trùng các nguồn theo title."
+        },
+        {
+          "role": "user",
+          "content": "Các nguồn là [{\"title\":\"Report A\",\"url\":\"https://a.example/report\"},{\"title\":\"Another title\",\"url\":\"https://a.example/report?utm_campaign=x\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Sửa lại: deduplicate theo URL và vẫn giữ thứ tự đầu tiên."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "source_deduplicate",
+            "args": {
+              "strategy": "url",
+              "preserve_order": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest deduplication strategy overrides title while carrying source items."
+      }
+    },
+    {
+      "id": "B_M02_claim_threshold_correction",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tạo claim matrix với min overlap 1 cho claim AI logistics và các source đã gửi."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"AI logistics platform\",\"summary\":\"AI automates logistics operations\",\"url\":\"https://example.com/a\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Với claim matrix này, tăng min_overlap lên 3 và chỉ lấy tối đa 1 source mỗi claim."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "claim_matrix",
+            "args": {
+              "min_overlap": 3,
+              "max_sources_per_claim": 1
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: apply corrected claim-matrix thresholds from the latest turn."
+      }
+    },
+    {
+      "id": "B_M03_citation_style_switch",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Xuất Markdown citation cho các nguồn của mình."
+        },
+        {
+          "role": "user",
+          "content": "Nguồn là [{\"title\":\"Research Update\",\"author\":\"A. Nguyen\",\"year\":\"2026\",\"url\":\"https://example.com/update\"}]."
+        },
+        {
+          "role": "user",
+          "content": "Đổi citation export sang APA, không cần abstract."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "citation_export",
+            "args": {
+              "style": "apa",
+              "include_abstract": false
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Multi-turn: latest citation-style correction overrides Markdown and preserves no-abstract constraint."
+      }
+    }
+  ]
+}
