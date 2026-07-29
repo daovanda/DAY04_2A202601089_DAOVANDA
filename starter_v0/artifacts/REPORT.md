@@ -75,7 +75,7 @@ trong final `tools.yaml`, nhằm giữ tool surface gọn và tránh routing nhi
 
 ---
 
-# PHẦN B — Chi tiết / Bằng chứng
+# PHẦN B — Chi tiết và bằng chứng
 
 ## B1. Version evidence
 
